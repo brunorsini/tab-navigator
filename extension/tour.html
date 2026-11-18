@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <meta name="theme-color" content="#102f35" />
+    <title>Tab Navigator — Watch the tour</title>
+    <style>
+      :root {
+        color-scheme: dark;
+        background: #102f35;
+        color: #faedd2;
+        font-family: system-ui, sans-serif;
+      }
+      body {
+        margin: 0;
+        min-height: 100svh;
+        display: grid;
+        place-items: center;
+      }
+      main {
+        width: min(1040px, 92vw);
+        padding: 2rem 0;
+      }
+      h1 {
+        font:
+          normal clamp(2rem, 6vw, 4.4rem)/1.07 Georgia,
+          serif;
+        margin: 0 0 1rem;
+      }
+      p {
+        color: #bbdbc1;
+        line-height: 1.5;
+      }
+      video {
+        display: block;
+        width: 100%;
+        aspect-ratio: 16/9;
+        box-sizing: border-box;
+        border: 1px solid #648784;
+        border-radius: 12px;
+        background: #0c242a;
+      }
+    </style>
+  </head>
+  <body>
+    <main>
+      <h1>Take a tour with the sailor.</h1>
+      <p>Find the ferry schedule, copy the time, and jump back to your itinerary in 41 seconds.</p>
+      <video
+        controls
+        playsinline
+        preload="metadata"
+        poster="media/tour-poster.jpg"
+        aria-label="Tab Navigator onboarding tour with narration and on-screen captions"
+        src="media/tour.mp4"
+      ></video>
+    </main>
+  </body>
+</html>

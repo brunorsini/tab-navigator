@@ -7,6 +7,10 @@ Find your way through a sea of tabs. A fast, keyboard-friendly Chrome extension 
 [![Checks](https://github.com/brunorsini/tab-navigator/actions/workflows/checks.yml/badge.svg)](https://github.com/brunorsini/tab-navigator/actions/workflows/checks.yml)
 [Releases](https://github.com/brunorsini/tab-navigator/releases) · [User guide](docs/usage.md) · [Privacy](PRIVACY.md) · [Report a bug](https://github.com/brunorsini/tab-navigator/issues)
 
+[![Play the 41-second Tab Navigator tour](extension/media/tour-poster.jpg)](https://brunorsini.github.io/tab-navigator/extension/tour.html)
+
+[Watch the narrated tour](https://brunorsini.github.io/tab-navigator/extension/tour.html) · [Download the source ZIP with the tour](https://github.com/brunorsini/tab-navigator/archive/refs/heads/main.zip). Extract the ZIP and load its **extension** folder in Chrome. The tour opens on first install and you can replay it from Settings.
+
 ## What it does
 
 - **Find a tab:** search titles, URLs, and tab groups; optionally include browsing history or loaded page text.

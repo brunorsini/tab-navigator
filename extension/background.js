@@ -499,8 +499,11 @@ chrome.runtime.onStartup.addListener(() =>
     await configureContext();
   }),
 );
-chrome.runtime.onInstalled.addListener(() =>
+chrome.runtime.onInstalled.addListener((details) =>
   serial(async () => {
+    if (details.reason === 'install') {
+      await chrome.tabs.create({ url: chrome.runtime.getURL('tour.html') });
+    }
     const { state } = await loadState();
     await saveState(state);
     await configureContext();
