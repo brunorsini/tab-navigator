@@ -29,7 +29,7 @@ Exact matches come first, followed by clearly relevant results ordered by recent
 
 Requires Chrome 127 or later. Native split view requires Chrome 155+ and is checked at runtime. Loading the extension needs no Node.js, dependency installation, or build step. Developers can load the repository's `extension/` folder directly.
 
-## Keyboard shortcuts
+## Default Keyboard shortcuts
 
 | Action          | macOS              | Windows / Linux  |
 | --------------- | ------------------ | ---------------- |
@@ -46,7 +46,9 @@ Change shortcuts at `chrome://extensions/shortcuts`. Other apps or extensions ca
 
 ## Privacy
 
-No accounts, servers, analytics, advertising, or remote code. Search and storage stay in your browser. History is searched only when enabled; page-text search starts disabled and requires optional website access. Bookmark access is requested when you use it. Incognito is disabled.
+**We collect no data from your use of Tab Navigator.** The extension searches your tabs on your device. We never receive your searches, browsing history, or page text. There are no accounts, analytics, ads, or remote code.
+
+You choose when to include browsing history in a search. Page-text search is off by default and requires website access. Tab Navigator asks for bookmark access when you choose to save bookmarks. It does not run in incognito.
 
 The local recovery journal stores closed-tab addresses for Undo; pending bookmark selections are also stored locally until completed or discarded. Restore reopens addresses and tab organization, **not unsaved form contents or page state**. The [privacy notice](PRIVACY.md) describes every stored data category and its retention.
 
