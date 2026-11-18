@@ -14,12 +14,21 @@
         <div class="wordmark">
           <img class="brand-icon" src="icons/256.png" alt="" />Tab Navigator
         </div>
-        <span class="version">VERSION 1.6.2 · OPEN SOURCE</span>
+        <span class="version"
+          >VERSION 1.7.0 ·
+          <a
+            class="notice-link"
+            href="https://github.com/brunorsini/tab-navigator"
+            target="_blank"
+            rel="noopener noreferrer"
+            >Open source on GitHub ↗</a
+          ></span
+        >
       </header>
       <span class="eyebrow">LESS SEARCHING. MORE FLOW.</span>
       <h1 class="settings-title">A quicker way back.</h1>
       <p class="intro">
-        Find an open tab. Add history when you need it. Pick up where you left off.
+        Find an open tab. Add history to your search when you need it. Pick up where you left off.
       </p>
       <section class="settings-card" aria-labelledby="keyboard-heading">
         <div class="card-heading">
@@ -27,14 +36,19 @@
           <button id="edit-shortcuts" class="text-button">Customize in Chrome ↗</button>
         </div>
         <div id="shortcuts"></div>
+        <p id="shortcut-help" class="card-note" hidden>
+          Some shortcuts are unassigned. Use Customize in Chrome to choose keys.
+        </p>
         <p class="card-note">
-          The cycle shortcut opens a visual recent-tab list. Repeat it to move the highlight;
-          reverse moves back. Your current page stays active until you press Enter. Escape or
-          clicking outside cancels. The list stays open when you release the modifiers. The last-tab
-          shortcut still toggles immediately between two tabs.<br /><br />Keyboard Maestro: Command
-          + Option + Tab sends Control + Shift + 7; adding Shift sends Control + Shift + 8. Your
-          existing mappings work as they are. No release macro or extra confirmation shortcut is
-          needed.
+          These are your current shortcuts. The defaults use Q for a quick return and R for recent
+          tabs; add Shift to reverse. Repeat the cycle shortcut or use ↑/↓, then press Enter to
+          switch. Escape or clicking outside cancels. Releasing the keys leaves the list open. Jump
+          to last tab switches immediately; press it again to return.
+        </p>
+        <p class="card-note">
+          Prefer the mouse? Pin Tab Navigator in Chrome’s Extensions menu, then click the spyglass
+          to search. You can change any shortcut above if it conflicts with another app or your
+          keyboard layout.
         </p>
       </section>
       <section class="settings-card" aria-labelledby="search-heading">
@@ -64,11 +78,12 @@
         <label class="settings-row"
           ><div>
             <span class="setting-name">Appearance</span>
-            <p class="setting-description">A quiet space for finding your next tab.</p>
           </div>
           <select id="theme" class="settings-select">
             <option value="dark">Dark</option>
             <option value="light">Light</option>
+            <option value="chartroom">Chartroom</option>
+            <option value="midnight">Midnight Blue</option>
             <option value="system">System</option>
           </select></label
         >

@@ -2,7 +2,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFile } from 'node:fs/promises';
 import { startPopup } from '../extension/lib/popup-startup.js';
-const build = '1.6.2';
+const build = '1.7.0';
 function fixture({ old = false, missing = false, repaired = false } = {}) {
   let loaded = 0,
     reloads = 0,

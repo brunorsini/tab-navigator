@@ -3,7 +3,7 @@
   "name": "Tab Navigator",
   "short_name": "Tab Navigator",
   "description": "Find the right tab instantly. Search tabs and history, jump to your last tab, and cycle through recent tabs. All on your device.",
-  "version": "1.6.2",
+  "version": "1.7.0",
   "minimum_chrome_version": "127",
   "incognito": "not_allowed",
   "permissions": ["tabs", "tabGroups", "storage", "history", "scripting", "favicon"],
@@ -15,7 +15,7 @@
   },
   "action": {
     "default_title": "Tab Navigator — Find a tab",
-    "default_popup": "popup.html?ui=1.6.2",
+    "default_popup": "popup.html?ui=1.7.0",
     "default_icon": {
       "16": "icons/toolbar-16.png",
       "32": "icons/toolbar-32.png",
@@ -33,30 +33,30 @@
   "commands": {
     "_execute_action": {
       "suggested_key": {
-        "default": "Ctrl+Shift+K",
+        "default": "Ctrl+Shift+E",
         "mac": "MacCtrl+E"
       }
     },
     "toggle-last": {
       "suggested_key": {
         "default": "Alt+Q",
-        "mac": "MacCtrl+Shift+9"
+        "mac": "Alt+Q"
       },
       "description": "Switch to the last tab (press again to return)"
     },
     "cycle-older": {
       "suggested_key": {
-        "default": "Alt+A",
-        "mac": "MacCtrl+Shift+7"
+        "default": "Alt+R",
+        "mac": "Alt+R"
       },
-      "description": "Cycle through recent tabs — older"
+      "description": "Cycle recent tabs forward (older)"
     },
     "cycle-newer": {
       "suggested_key": {
-        "default": "Alt+Shift+A",
-        "mac": "MacCtrl+Shift+8"
+        "default": "Alt+Shift+R",
+        "mac": "Alt+Shift+R"
       },
-      "description": "Cycle through recent tabs — newer"
+      "description": "Cycle recent tabs backward (newer)"
     }
   },
   "content_security_policy": {

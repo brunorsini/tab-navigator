@@ -151,6 +151,9 @@ try {
   );
   check('A failed icon restores the readable local fallback');
   const input = popup.locator('#search');
+  assert.equal(await popup.locator('#domain-filter').isVisible(), false);
+  await input.fill('   ');
+  assert.equal(await popup.locator('#domain-filter').isVisible(), false);
   await popup.locator('#tabs-filter').click();
   await input.fill('youtube');
   await popup.getByText('Choose where to look.').waitFor();
@@ -160,6 +163,11 @@ try {
   assert.match(await popup.locator('.domain-heading').first().textContent(), /youtube.com/);
   await popup.locator('#domain-filter').click();
   assert.equal(await popup.locator('.domain-heading').count(), 0);
+  await input.fill('');
+  assert.equal(await popup.locator('#domain-filter').isVisible(), false);
+  await input.fill('youtube');
+  assert.equal(await popup.locator('#domain-filter').isVisible(), true);
+  assert.equal(await popup.locator('#domain-filter').getAttribute('aria-pressed'), 'false');
   await popup.locator('#domain-filter').click();
   assert.equal(await popup.locator('#domain-filter').getAttribute('aria-pressed'), 'true');
   check('Domain grouping can be toggled without losing the query or matches');
@@ -284,14 +292,14 @@ try {
   const commands = await options.evaluate(async () => chrome.commands.getAll());
   const manifest = await options.evaluate(() => chrome.runtime.getManifest());
   assert.equal(manifest.commands['_execute_action'].suggested_key.mac, 'MacCtrl+E');
-  assert.equal(manifest.commands['cycle-older'].suggested_key.mac, 'MacCtrl+Shift+7');
-  assert.equal(manifest.commands['cycle-newer'].suggested_key.mac, 'MacCtrl+Shift+8');
-  assert.equal(manifest.commands['toggle-last'].suggested_key.mac, 'MacCtrl+Shift+9');
+  assert.equal(manifest.commands['cycle-older'].suggested_key.mac, 'Alt+R');
+  assert.equal(manifest.commands['cycle-newer'].suggested_key.mac, 'Alt+Shift+R');
+  assert.equal(manifest.commands['toggle-last'].suggested_key.mac, 'Alt+Q');
   assert(commands.find((command) => command.name === '_execute_action').shortcut);
   assert(commands.find((command) => command.name === 'toggle-last').shortcut);
   for (const command of commands.filter((command) => command.name.startsWith('cycle-')))
     assert(command.shortcut);
-  check('Keyboard Maestro targets are configured and unassigned keys are accurately shown');
+  check('Chrome registers all four default extension shortcuts');
 
   // Headless key events do not reach OS/browser accelerators. Invoke the same worker
   // command dispatcher used by global shortcuts and the palette's Alt+Arrow navigation.
@@ -417,20 +425,23 @@ try {
   assert.deepEqual(stateAfter.order, stateBefore.order);
   check('Real service-worker stop/wake retains tab recency and responds successfully');
 
-  await popup.reload();
-  await input.fill('counterpress');
-  await popup.locator('.result-title').first().waitFor();
-  await popup.screenshot({
+  // Committing the cycle preview dismisses its popup. Open search as the user would.
+  const searchPage = await context.newPage();
+  await searchPage.goto(`${base}/popup.html`);
+  const searchInput = searchPage.locator('#search');
+  await searchInput.fill('counterpress');
+  await searchPage.locator('.result-title').first().waitFor();
+  await searchPage.screenshot({
     path: join(output, 'relay-search.png'),
     clip: { x: 0, y: 0, width: 620, height: 584 },
   });
-  await input.fill('');
-  await popup.locator('.result').nth(3).waitFor();
+  await searchInput.fill('');
+  await searchPage.locator('.result').nth(3).waitFor();
   await waitFor(
-    async () => (await popup.locator('.favicon.loaded').count()) >= 4,
+    async () => (await searchPage.locator('.favicon.loaded').count()) >= 4,
     'screenshot favicons',
   );
-  await popup.screenshot({
+  await searchPage.screenshot({
     path: join(output, 'relay-popup.png'),
     clip: { x: 0, y: 0, width: 620, height: 584 },
   });
@@ -439,9 +450,9 @@ try {
   await options.screenshot({ path: join(output, 'relay-settings.png'), fullPage: true });
   check('Captured screenshots of the installed extension and saved settings');
   // Enter exercises the real activation message and closes the extension page.
-  await input.fill('counterpress');
-  const closed = popup.waitForEvent('close');
-  await input.press('Enter');
+  await searchInput.fill('counterpress');
+  const closed = searchPage.waitForEvent('close');
+  await searchInput.press('Enter');
   await closed;
   const target = await options.evaluate(
     async () => (await chrome.tabs.query({ active: true, lastFocusedWindow: true }))[0],
@@ -466,6 +477,35 @@ try {
     ),
   );
   check('Closed-tab history results retain their website favicon');
+  // Exercise both themes through Settings and capture only the disposable profile.
+  const duplicate = await context.newPage();
+  await duplicate.goto(fixtures[1][0]);
+  const review = await context.newPage();
+  const themePopup = await context.newPage();
+  await themePopup.emulateMedia({ reducedMotion: 'reduce' });
+  for (const theme of ['chartroom', 'midnight']) {
+    await options.locator('#theme').selectOption(theme);
+    await options.locator(`html[data-theme="${theme}"]`).waitFor();
+    await options.reload();
+    await options.locator(`html[data-theme="${theme}"]`).waitFor();
+    assert.equal(await options.locator('#theme').inputValue(), theme);
+    assert.equal(
+      await options.getByRole('link', { name: /Open source on GitHub/ }).getAttribute('href'),
+      'https://github.com/brunorsini/tab-navigator',
+    );
+    await options.setViewportSize({ width: 1280, height: 800 });
+    await options.screenshot({ path: join(output, `settings-${theme}.png`) });
+    await review.goto(`${base}/review.html`);
+    await review.locator(`html[data-theme="${theme}"] .duplicate-heading`).first().waitFor();
+    await review.setViewportSize({ width: 1280, height: 800 });
+    await review.screenshot({ path: join(output, `duplicates-${theme}.png`) });
+    await themePopup.goto(`${base}/popup.html`);
+    await themePopup.locator(`html[data-theme="${theme}"] .result`).first().waitFor();
+    await themePopup.locator('#search').fill('building');
+    await themePopup.locator('.result').nth(2).waitFor();
+    await themePopup.locator('main').screenshot({ path: join(output, `search-${theme}.png`) });
+  }
+  check('Both new appearance choices persist and apply to search, settings, and duplicate review');
   assert.deepEqual(remotePopupRequests, []);
   check('Searching and displaying favicons makes no remote requests from the palette');
   assert.deepEqual(errors, []);

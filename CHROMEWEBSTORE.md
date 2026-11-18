@@ -1,12 +1,12 @@
 # Tab Navigator Chrome Web Store submission draft
 
-Status: submission materials prepared; not submitted to or published in the Chrome Web Store. The public contact address is support@orsini.org. Developer registration, contact-email verification, current store screenshots, and dashboard submission remain pending.
+Publisher worksheet for the Chrome Web Store draft. The public contact address is support@orsini.org.
 
 ## Listing
 
 - Name: **Tab Navigator**
-- Version: **1.6.2**
-- Category suggestion: **Productivity**
+- Version: **1.7.0**
+- Category suggestion: **Functionality & UI**
 - Language: **English**
 - Minimum Chrome version: **127**
 - Single purpose: Find, switch, and organize browser tabs from one local search interface, with optional browsing-history search.
@@ -30,7 +30,7 @@ Jump to your last tab and back again with one shortcut. Cycle through your recen
 
 See the complete matching tab count, select all matches, and close immediately, add to a tab group, or save to a bookmark folder. Each close has its own Restore button for one minute, with a visual countdown. A hover × closes individual search-result tabs the same way. Pair two compatible tabs in Chrome's native split view on Chrome 155 or newer. Bookmark access is optional and requested when used. The selection is saved before the permission dialog and resumed in a dedicated page. Review duplicate addresses with clear Keep/Close choices; possible unsaved input and unchecked pages stay open by default in duplicate cleanup. Restore reopens saved addresses, not unsaved page contents.
 
-Choose dark, light, or system appearance. Enable optional page-text search to find words in descriptions, headings, and loaded text from open websites. Local indexing runs in short idle slices with fixed processing and cache limits. It does not index PDFs, image text, or video transcripts. Clear titles, URLs, and matching text keep the interface light without thumbnails.
+Choose Chartroom for warm paper and teal, Midnight Blue for ink and brass, or use the light, dark, or system setting. Enable optional page-text search to find words in descriptions, headings, and loaded text from open websites. Local indexing runs in short idle slices with fixed processing and cache limits. It does not index PDFs, image text, or video transcripts. Clear titles, URLs, and matching text keep the interface light without thumbnails.
 
 Everything is searched on your device. No accounts, analytics, remote search requests, or AI downloads. Page-text search requires optional website access. Tab Navigator does not run in incognito.
 
@@ -59,14 +59,14 @@ The extension does not sell or transfer user data to the developer or third part
 
 ## Submission assets and remaining publisher actions
 
-- `dist/tab-navigator-1.6.2.zip`: packaged extension, manifest at archive root.
+- `dist/tab-navigator-1.7.0.zip`: packaged extension, manifest at archive root.
 - `extension/icons/128.png`: application icon, with 16/32/48 px variants in the package.
-- `dist/tab-navigator-1.6.2.zip.sha256`: release checksum.
-- Capture at least one **1280 × 800** screenshot of the current extension using synthetic browsing data; up to five are allowed. Suggested views: search, selected-tab actions with Restore, and duplicate review. Existing local screenshots are excluded and must not be uploaded. See [Google's graphic asset requirements](https://developer.chrome.com/docs/webstore/cws-dashboard-listing).
-- A small 440 × 280 promotional tile and 1400 × 560 marquee are optional. No promotional video is required.
-- Complete [developer registration](https://developer.chrome.com/docs/webstore/register), including the developer agreement and one-time fee, and enable two-step verification for the publishing account.
-- On the dashboard's **Account** page, set the public contact email to **support@orsini.org**, request verification, and follow the link Google sends to that address. The public contact address is separate from the Google account used to register. See [Google's account setup instructions](https://developer.chrome.com/docs/webstore/set-up-account). Contact-email verification has not yet been completed.
-- Review the final permission and data disclosures, upload the ZIP and clean screenshots, and submit for Google's review. No store upload or account registration has been performed.
+- `dist/tab-navigator-1.7.0.zip.sha256`: release checksum.
+- Use a **1280 × 800** screenshot of the current extension with sample tabs. Release screenshots are separate from the extension ZIP. See [Google's graphic asset requirements](https://developer.chrome.com/docs/webstore/cws-dashboard-listing).
+- The 440 × 280 promotional tile, 1400 × 560 marquee, and promotional video are optional.
+- In the dashboard’s **Account** section, check verification for **support@orsini.org**. See [Google’s account setup instructions](https://developer.chrome.com/docs/webstore/set-up-account).
+- Distribution: free, public, all available regions. Language: English. Mature content: no.
+- Upload the ZIP, icon, and screenshots. Paste the listing and permission justifications above, review the data disclosures, and save the draft for the publisher’s final review.
 
 ## Manual release check
 

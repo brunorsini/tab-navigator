@@ -22,7 +22,7 @@ Exact matches come first, followed by clearly relevant results ordered by recent
 
 **The Chrome Web Store listing is not published yet.** Until then:
 
-1. Download `tab-navigator-1.6.2.zip` from [Releases](https://github.com/brunorsini/tab-navigator/releases/latest) and extract it into a permanent folder.
+1. Download `tab-navigator-1.7.0.zip` from [Releases](https://github.com/brunorsini/tab-navigator/releases/latest) and extract it into a permanent folder.
 2. Open `chrome://extensions` and enable **Developer mode**.
 3. Choose **Load unpacked** and select the extracted folder containing `manifest.json`.
 4. Pin **Tab Navigator** from Chrome's extensions menu.
@@ -31,12 +31,14 @@ Requires Chrome 127 or later. Native split view requires Chrome 155+ and is chec
 
 ## Keyboard shortcuts
 
-| Action          | macOS               | Windows / Linux  |
-| --------------- | ------------------- | ---------------- |
-| Open search     | Control + E         | Ctrl + Shift + K |
-| Toggle last tab | Control + Shift + 9 | Alt + Q          |
-| Cycle older     | Control + Shift + 7 | Alt + A          |
-| Cycle newer     | Control + Shift + 8 | Alt + Shift + A  |
+| Action          | macOS              | Windows / Linux  |
+| --------------- | ------------------ | ---------------- |
+| Open search     | Control + E        | Ctrl + Shift + E |
+| Toggle last tab | Option + Q         | Alt + Q          |
+| Cycle forward   | Option + R         | Alt + R          |
+| Cycle backward  | Option + Shift + R | Alt + Shift + R  |
+
+**Q** for a quick return, **R** for recent tabs; **Shift** reverses. These are new-install defaults. Settings shows your actual assignments, including custom bindings. You can also pin and click the toolbar spyglass to search.
 
 In search, **↑/↓** moves the highlight, **Enter** switches tabs, **Command/Ctrl + Enter** toggles selection, and **Escape** closes the popup. Recent-tab cycling previews your destination; Enter confirms it.
 

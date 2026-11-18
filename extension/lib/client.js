@@ -27,3 +27,11 @@ export function shortcutLabel(shortcut) {
     .replace(/\s+/g, ' ')
     .trim();
 }
+
+export function cycleShortcutHint(commands = []) {
+  const key = (name, fallback) => {
+    const shortcut = commands.find((command) => command.name === name)?.shortcut;
+    return shortcut ? shortcutLabel(shortcut) : fallback;
+  };
+  return `${key('cycle-older', '↓')} moves down · ${key('cycle-newer', '↑')} moves up`;
+}

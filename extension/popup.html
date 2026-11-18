@@ -1,11 +1,11 @@
 <!doctype html>
-<html lang="en" data-theme="dark" data-palette-build="1.6.2">
+<html lang="en" data-theme="dark" data-palette-build="1.7.0">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Tab Navigator — Find your tab</title>
     <link rel="stylesheet" href="ui.css" />
-    <script type="module" src="popup.js?ui=1.6.2"></script>
+    <script type="module" src="popup.js?ui=1.7.0"></script>
     <link rel="stylesheet" href="controls.css" />
   </head>
   <body class="popup">
@@ -32,18 +32,17 @@
       <div id="switcher-heading" class="switcher-heading" hidden>
         <button id="cancel-preview" class="icon-button" aria-label="Cancel tab switching">×</button>
         <h1>Where you left off.</h1>
-        <p id="switcher-instructions">⌘ ⌥ Tab moves down · Add Shift to move up</p>
+        <p id="switcher-instructions">↓ moves down · ↑ moves up</p>
         <span id="switcher-finish">Enter switches to the highlighted tab · Esc cancels</span>
       </div>
       <div class="search-wrap">
-        <img
-          class="search-mascot"
-          src="icons/256.png"
-          width="64"
-          height="64"
-          alt=""
-          draggable="false"
-        />
+        <picture class="search-mascot" aria-hidden="true">
+          <source
+            media="(prefers-reduced-motion: no-preference)"
+            srcset="icons/sailor-arrival.webp"
+          />
+          <img src="icons/256.png" width="44" height="44" alt="" draggable="false" />
+        </picture>
         <input
           id="search"
           type="search"
@@ -78,7 +77,8 @@
             id="domain-filter"
             class="filter"
             aria-pressed="true"
-            title="Group search results by website, including subdomains. An empty search stays in recent-tab order."
+            title="Group search results by website, including subdomains"
+            hidden
           >
             <span class="check" aria-hidden="true">✓</span>Group by domain</button
           ><button

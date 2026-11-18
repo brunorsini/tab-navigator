@@ -90,6 +90,21 @@ export async function checkRelease() {
       checkPng(bytes, file);
       continue;
     }
+    if (file.endsWith('.webp')) {
+      assert.equal(bytes.toString('ascii', 0, 4), 'RIFF', file);
+      assert.equal(bytes.readUInt32LE(4) + 8, bytes.length, file);
+      assert.equal(bytes.toString('ascii', 8, 16), 'WEBPVP8X', file);
+      // Our animated artwork contains a canvas, playback settings and frames only.
+      let offset = 12;
+      while (offset < bytes.length) {
+        const type = bytes.toString('ascii', offset, offset + 4);
+        assert(['VP8X', 'ANIM', 'ANMF'].includes(type), `Unexpected WebP chunk ${type}: ${file}`);
+        const size = bytes.readUInt32LE(offset + 4);
+        offset += 8 + size + (size % 2);
+      }
+      assert.equal(offset, bytes.length, file);
+      continue;
+    }
     const text = bytes.toString('utf8');
     assert(!/\/(?:Users|home)\/[^/\s]+\/|\/var\/folders\//.test(text), `Local path in ${file}`);
     assert(!/-----BEGIN [A-Z ]*PRIVATE KEY-----/.test(text), `Private key in ${file}`);
@@ -107,12 +122,22 @@ export async function checkRelease() {
       );
     }
     if (file.endsWith('.html')) {
-      assert(
-        !/\b(?:src|href)\s*=\s*["'](?:https?:)?\/\//i.test(text),
-        `External resource in ${file}`,
-      );
-      for (const [, reference] of text.matchAll(/\b(?:src|href)="([^"#]+)"/g)) {
-        assert(files.includes(reference.split('?')[0]), `Missing HTML resource: ${reference}`);
+      for (const [, tag, attributes] of text.matchAll(/<([a-z][\w-]*)\b([^>]*)>/gi)) {
+        for (const [, attribute, , reference] of attributes.matchAll(
+          /\s(src|href)\s*=\s*(["'])(.*?)\2/gi,
+        )) {
+          if (
+            file === 'options.html' &&
+            tag === 'a' &&
+            attribute === 'href' &&
+            reference === pkg.homepage
+          )
+            continue;
+          assert(
+            files.includes(reference.split('?')[0]),
+            `Unexpected HTML resource in ${file}: ${reference}`,
+          );
+        }
       }
     }
   }

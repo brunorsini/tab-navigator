@@ -2,18 +2,22 @@
 
 ## Shortcuts
 
-| Action                                      | macOS               | Windows / Linux  |
-| ------------------------------------------- | ------------------- | ---------------- |
-| Open search                                 | Control + E         | Ctrl + Shift + K |
-| Jump to the last tab; press again to return | Control + Shift + 9 | Alt + Q          |
-| Cycle through recent tabs, older            | Control + Shift + 7 | Alt + A          |
-| Reverse the cycle                           | Control + Shift + 8 | Alt + Shift + A  |
+| Action                                      | macOS              | Windows / Linux  |
+| ------------------------------------------- | ------------------ | ---------------- |
+| Open search                                 | Control + E        | Ctrl + Shift + E |
+| Jump to the last tab; press again to return | Option + Q         | Alt + Q          |
+| Cycle forward through recent tabs, older    | Option + R         | Alt + R          |
+| Reverse the cycle                           | Option + Shift + R | Alt + Shift + R  |
+
+**Q** is a quick return; **R** opens recent tabs; **Shift** reverses. The defaults are reachable with the left hand on a QWERTY keyboard. Windows/Linux search adds Shift because Chrome already uses Ctrl + E for address-bar search. On Mac, Control + E also has a text-editing meaning, and Option-letter shortcuts can affect special-character entry. Change any binding at `chrome://extensions/shortcuts` if it conflicts with your keyboard layout, website, or another extension. Settings and the popup show the actual assigned keys. You can always pin and click the toolbar spyglass to search.
 
 Type to search, use Up/Down to select, and press Enter to switch. Command/Ctrl + 1–9 opens the corresponding result. Escape or the top-right × closes the palette immediately. The × inside the search field clears the query. Tab navigates the filters and settings button. Inside the palette, Option/Alt + Left/Right also cycles through recent tabs.
 
 Cycling opens the same palette in a visual recent-tab mode. It freezes the MRU order and moves only the highlight, keeping the current page active until you press Enter. Escape or clicking outside cancels. The last-tab shortcut remains an immediate two-tab toggle. Chrome 127 or later is required for the browser-wide popup API.
 
-**Keyboard Maestro setup:** map Command + Option + Tab to Control + Shift + 7, and Command + Option + Shift + Tab to Control + Shift + 8. Hold the modifiers while tapping Tab to move through the list; Shift reverses. **Enter confirms, Escape cancels.** Releasing the modifiers leaves the list open. No extra confirmation shortcut or release macro is needed.
+**Optional Keyboard Maestro setup:** in Chrome’s shortcut settings, assign forward cycling to Control + Shift + 7, backward cycling to Control + Shift + 8, and last tab to Control + Shift + 9. Map Command + Option + Tab to the forward key and Command + Option + Shift + Tab to the backward key. Any preferred last-tab gesture can send the last-tab key. Hold the modifiers while tapping Tab to move through the list; Shift reverses. **Enter confirms, Escape cancels.** Releasing the modifiers leaves the list open. No extra confirmation shortcut or release macro is needed.
+
+**Upgrading from the numeric defaults:** command names stay the same. Chrome preserves customized assignments, but an unchanged old default can move to the new default on update. If Keyboard Maestro sends the numeric keys, check the three assignments above after reloading and set them explicitly if needed; the macros themselves do not need to change.
 
 Chrome does not directly accept Tab in extension bindings; Keyboard Maestro can translate alternative gestures into supported keys.
 
@@ -52,7 +56,7 @@ This is best-effort protection, not a universal saved-state detector: custom edi
 - Matching uses page titles, decoded URLs, tab-group names, and optionally page context. Exact whole-title/address matches rank first. Whole-word title and hostname matches (including all query words split across those fields) come next, ordered by most recently used. Partial matches, URL-path mentions, group names, and page context follow; one-edit typo matches come last. Recency decides order within each quality tier, before small field/position bonuses. Matching ignores case and accents. Quotes require an exact phrase.
 - History is read only when enabled and the query is nonempty. The complete phrase and up to three individual words are queried against Chrome's title/URL history, with up to 400 candidates per query and up to 1,600 deduplicated candidates. All candidates are ranked against the same complete query. Chrome does not retain the body text of historical pages; historical page contents are not searched, and typo matching depends on the candidates Chrome returns.
 - If a history result is already open, Enter activates that tab instead of opening a duplicate. Multiple open tabs with the same URL remain independently selectable.
-- **Group by domain** is on by default and remembered locally. During a search it combines a site and its subdomains (for example, `example.com`, `docs.example.com`, and `app.example.com`). Exact matches stay in their own section at the top. A domain matching the query precedes other website groups, so GitHub mentions come after the matching website’s own pages. Each group preserves the same relevance-then-recency ranking. Empty searches and the recent-tab switcher remain in global MRU order. Country suffixes such as `com.br` and private hosting domains such as `github.io` are handled by the bundled Public Suffix List.
+- **Group by domain** appears only when the query contains non-whitespace text. Its preference is on by default and remembered locally, even when clearing the search hides the button. During a search it combines a site and its subdomains (for example, `example.com`, `docs.example.com`, and `app.example.com`). Exact matches stay in their own section at the top. A domain matching the query precedes other website groups, so GitHub mentions come after the matching website’s own pages. Each group preserves the same relevance-then-recency ranking. Empty searches and the recent-tab switcher remain in global MRU order. Country suffixes such as `com.br` and private hosting domains such as `github.io` are handled by the bundled Public Suffix List.
 - Result order stays stable automatically throughout each search. Background updates and delayed history do not move existing matches; new matches append and removed/nonmatching tabs disappear. The highlighted tab and checked tabs are retained when possible. Reopening search or changing the query, sources, window scope, or domain toggle starts a fresh ranking. There is no manual order-lock control.
 - **This window** applies to open-tab results and switching. History remains browser-wide.
 - **Search page text** is opt-in in settings. It requests HTTP/HTTPS website access and scans loaded page text in short idle slices on load, revisit, and title/navigation events. This includes text deep in an article. It does not continuously observe every body mutation, download closed/discarded tabs, parse PDFs or local files, perform OCR, understand video/audio, or retrieve YouTube transcripts. Text in frames and closed shadow roots is not indexed.

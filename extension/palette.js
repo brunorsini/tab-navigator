@@ -3,12 +3,13 @@ import { highlightRanges } from './lib/highlight.js';
 import { recency } from './lib/recency.js';
 import { splitAvailability } from './lib/split-view.js';
 import { createUndoBars } from './lib/undo-bars.js';
-import { request, applyTheme, shortcutLabel } from './lib/client.js';
+import { request, applyTheme, shortcutLabel, cycleShortcutHint } from './lib/client.js';
 import { createBookmarkDraft, pendingBookmarkDraft } from './lib/bookmark-draft.js';
 import { palettePort } from './lib/palette-port.js';
 import { draftKey } from './lib/bookmark-draft.js';
 import {
   ROW_HEIGHT,
+  HEADING_HEIGHT,
   groupResults,
   stabilizeResults,
   selectedAfterUpdate,
@@ -17,6 +18,8 @@ import {
 } from './lib/result-view.js';
 const $ = (id) => document.getElementById(id);
 const input = $('search');
+$('results').style.setProperty('--result-row-height', `${ROW_HEIGHT}px`);
+$('results').style.setProperty('--result-heading-height', `${HEADING_HEIGHT}px`);
 const uiBuild = new URL(import.meta.url).searchParams.get('ui');
 const selectionKey = /Mac/.test(navigator.platform) ? '⌘ ↵' : 'Ctrl ↵';
 $('selection-shortcut').textContent = selectionKey;
@@ -47,6 +50,29 @@ const node = (tag, className, text) => {
 function notice(message) {
   $('notice').textContent = message;
   $('notice').hidden = !message;
+}
+function reloadNotice() {
+  const link = node('a', 'notice-link', 'Chrome’s Extensions page');
+  link.href = `chrome://extensions/?id=${chrome.runtime.id}`;
+  link.addEventListener('click', async (event) => {
+    event.preventDefault();
+    try {
+      // Open directly: an old worker must not block its own recovery link.
+      await chrome.tabs.create({ url: link.href });
+      window.close();
+    } catch {
+      notice('Could not open Extensions. Open chrome://extensions to reload Tab Navigator.');
+    }
+  });
+  link.addEventListener('keydown', (event) => {
+    if (event.key === 'Enter') event.stopPropagation();
+  });
+  $('notice').replaceChildren(
+    document.createTextNode('Reload Tab Navigator in '),
+    link,
+    document.createTextNode(' to finish this update.'),
+  );
+  $('notice').hidden = false;
 }
 function siteIcon(item) {
   const host = displayUrl(item.url).split('/')[0];
@@ -118,6 +144,8 @@ function syncFilters() {
     (tab) => !data.settings.currentWindow || tab.windowId === data.windowId,
   ).length;
   $('domain-filter').setAttribute('aria-pressed', String(groupByDomain));
+  $('domain-filter').hidden = Boolean(preview) || !input.value.trim();
+  if ($('domain-filter').hidden && document.activeElement === $('domain-filter')) input.focus();
 }
 async function syncWindowScope() {
   const version = ++windowScopeVersion;
@@ -391,7 +419,7 @@ function setSelected(index, scroll = true) {
     const headingTop =
       results[selected].section &&
       (selected === 0 || results[selected - 1].section?.key !== results[selected].section.key)
-        ? top - 30
+        ? top - HEADING_HEIGHT
         : top;
     if (headingTop < list.scrollTop) list.scrollTop = headingTop;
     else if (top + ROW_HEIGHT > list.scrollTop + list.clientHeight)
@@ -448,12 +476,7 @@ function setPreview(value) {
   document.body.classList.toggle('is-switcher', Boolean(preview));
   $('switcher-heading').hidden = !preview;
   if (preview) {
-    const nativeAlt = /Alt|⌥/.test(
-      data?.commands.find((command) => command.name === 'cycle-older')?.shortcut || '',
-    );
-    $('switcher-instructions').textContent = nativeAlt
-      ? 'Repeat the cycle shortcut · Shift reverses'
-      : '⌘ ⌥ Tab moves down · Add Shift to move up';
+    $('switcher-instructions').textContent = cycleShortcutHint(data?.commands);
     $('switcher-finish').textContent = 'Enter switches to the highlighted tab · Esc cancels';
     picked.clear();
     closeAction();
@@ -747,8 +770,7 @@ async function refresh() {
     const shortcut = data.commands.find((command) => command.name === '_execute_action')?.shortcut;
     $('search-shortcut').textContent = shortcut ? shortcutLabel(shortcut) : 'Set shortcut';
     if (!shortcut) notice('Search shortcut is unassigned. Open settings to choose one.');
-    if (uiBuild && snapshot.version !== uiBuild)
-      notice('Reload Tab Navigator in Chrome’s Extensions page to finish this update.');
+    if (uiBuild && snapshot.version !== uiBuild) reloadNotice();
   } catch (error) {
     notice(error.message);
   }

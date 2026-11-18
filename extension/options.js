@@ -30,8 +30,8 @@ async function load() {
     const labels = {
       _execute_action: 'Find a tab',
       'toggle-last': 'Jump to the last tab',
-      'cycle-older': 'Cycle through recent tabs',
-      'cycle-newer': 'Cycle in the other direction',
+      'cycle-older': 'Cycle recent tabs forward',
+      'cycle-newer': 'Cycle recent tabs backward',
     };
     $('shortcuts').replaceChildren();
     for (const name of Object.keys(labels)) {
@@ -56,6 +56,9 @@ async function load() {
       row.append(label, value);
       $('shortcuts').append(row);
     }
+    $('shortcut-help').hidden = Object.keys(labels).every((name) =>
+      data.commands.some((command) => command.name === name && command.shortcut),
+    );
   } catch (error) {
     status(error.message);
   }

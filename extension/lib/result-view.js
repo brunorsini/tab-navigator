@@ -1,8 +1,8 @@
 import { getDomain } from '../vendor/tldts.js';
 import { normalize, wholePhrase } from './search.js';
 
-export const ROW_HEIGHT = 80;
-export const HEADING_HEIGHT = 30;
+export const ROW_HEIGHT = 62;
+export const HEADING_HEIGHT = 26;
 
 export function domainOf(value) {
   try {

@@ -1,9 +1,9 @@
 .review-page {
-  --warn: #edc58a;
-  --close: #efb0a0;
+  --warn: var(--age-today);
+  --close: var(--age-older);
   min-height: 100vh;
   padding-bottom: 125px;
-  background: radial-gradient(ellipse at 95% 0%, #31402a45, transparent 42%), var(--bg);
+  background: var(--bg);
 }
 .review-page:has(#undo-bars:not([hidden])) {
   padding-bottom: 265px;
@@ -88,7 +88,7 @@
   left: 32px;
   top: 18px;
   transform: rotate(8deg);
-  border-color: #5b7049;
+  border-color: var(--control-line);
   background: var(--selected);
   color: var(--accent);
   display: grid;
@@ -232,10 +232,18 @@
   position: relative;
 }
 .copy-row[data-choice='keep'] {
-  background: linear-gradient(90deg, #829f5914, transparent 55%);
+  background: linear-gradient(
+    90deg,
+    color-mix(in srgb, var(--accent) 8%, transparent),
+    transparent 55%
+  );
 }
 .copy-row[data-choice='close'] {
-  background: linear-gradient(90deg, #efb0a00d, transparent 55%);
+  background: linear-gradient(
+    90deg,
+    color-mix(in srgb, var(--close) 5%, transparent),
+    transparent 55%
+  );
 }
 .choice-label {
   font-size: 10px;
@@ -320,7 +328,7 @@
 }
 .choice-switch button.close-choice[aria-pressed='true'] {
   color: var(--close);
-  background: #efb0a01a;
+  background: color-mix(in srgb, var(--close) 10%, transparent);
 }
 .choice-switch button:hover {
   background: var(--hover);
@@ -336,7 +344,7 @@
 .review-notice {
   padding: 15px 18px;
   background: var(--selected);
-  border: 1px solid #536447;
+  border: 1px solid var(--control-line);
   border-radius: 8px;
   color: var(--accent-text);
   font-size: 12px;

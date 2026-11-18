@@ -89,9 +89,17 @@ function syncSummary() {
     ? report.rows.filter((tab) => reviewed.has(tab.tabId) && tab.check.status === 'unknown').length
     : 0;
   $('stat-one').textContent = (isReview ? copies - count : visible.length).toLocaleString();
-  $('stat-one-label').textContent = isReview ? 'staying open' : 'repeated pages';
+  $('stat-one-label').textContent = isReview
+    ? 'staying open'
+    : visible.length === 1
+      ? 'repeated page'
+      : 'repeated pages';
   $('stat-two').textContent = copies.toLocaleString();
-  $('stat-two-label').textContent = isReview ? 'tabs reviewed' : 'open copies';
+  $('stat-two-label').textContent = isReview
+    ? copies === 1
+      ? 'tab reviewed'
+      : 'tabs reviewed'
+    : 'open copies';
   $('stat-three').textContent = count.toLocaleString();
   $('stat-three-label').textContent = 'marked to close';
   $('plan-summary').textContent = isReview
@@ -106,8 +114,8 @@ function syncSummary() {
   $('primary').textContent = busy
     ? 'Working…'
     : isReview && report.token
-      ? `Close ${count} tabs`
-      : `Review ${count} closures →`;
+      ? `Close ${count} ${count === 1 ? 'tab' : 'tabs'}`
+      : `Review ${count} ${count === 1 ? 'closure' : 'closures'} →`;
   $('primary').disabled = busy || !count || !data?.closeReviewVersion;
   undoBars.set(data?.undo, { disabled: busy });
   for (const node of document.querySelectorAll(

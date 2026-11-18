@@ -377,7 +377,7 @@ chrome.runtime.onMessage.addListener((message, sender, respond) => {
         const next = { ...old };
         for (const key of ['currentWindow', 'pageText'])
           if (typeof message.settings?.[key] === 'boolean') next[key] = message.settings[key];
-        if (['dark', 'light', 'system'].includes(message.settings?.theme))
+        if (['dark', 'light', 'system', 'chartroom', 'midnight'].includes(message.settings?.theme))
           next.theme = message.settings.theme;
         if (next.pageText && !(await chrome.permissions.contains({ origins: ORIGINS })))
           next.pageText = false;

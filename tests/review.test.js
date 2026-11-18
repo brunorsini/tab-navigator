@@ -160,7 +160,7 @@ test('a group Close action reviews only that group and keeps risky copies by def
   assert.deepEqual(prepared.tabIds, [3, 2, 1]);
   assert.deepEqual(prepared.keepers, [{ url: 'https://alpha.example/', ids: [4] }]);
   assert.equal(document.getElementById('stat-two').textContent, '3');
-  assert.equal(document.getElementById('primary').textContent, 'Close 1 tabs');
+  assert.equal(document.getElementById('primary').textContent, 'Close 1 tab');
   assert.equal(
     document.querySelector('button[data-tab="1"][data-choice="close"]').attributes['aria-pressed'],
     'true',
