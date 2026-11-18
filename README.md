@@ -48,6 +48,10 @@ No accounts, servers, analytics, advertising, or remote code. Search and storage
 
 The local recovery journal stores closed-tab addresses for Undo; pending bookmark selections are also stored locally until completed or discarded. Restore reopens addresses and tab organization, **not unsaved form contents or page state**. The [privacy notice](PRIVACY.md) describes every stored data category and its retention.
 
+## Support
+
+Email [support@orsini.org](mailto:support@orsini.org) for help or privacy questions. For public bug reports and feature requests, use [GitHub Issues](https://github.com/brunorsini/tab-navigator/issues). Please leave out private browsing data and screenshots that contain personal information.
+
 ## Development
 
 Use Node.js 22 or later, npm, and the `zip` / `unzip` command-line tools:

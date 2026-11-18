@@ -28,6 +28,10 @@ Selecting a history result may open its website, which then follows that site's 
 
 Tab Navigator's use of information received from Chrome APIs follows the [Chrome Web Store User Data Policy](https://developer.chrome.com/docs/webstore/program-policies/user-data), including its Limited Use requirements. Data is used only for the tab navigation and organization features described here. It is not sold, used for advertising, or used to determine creditworthiness.
 
-For questions, use [GitHub Issues](https://github.com/brunorsini/tab-navigator/issues) with a description that contains no private browsing data. Security issues can be reported [privately](https://github.com/brunorsini/tab-navigator/security/advisories/new). GitHub operates separately under its own privacy policy; submitting a report there is your choice.
+## Contact
+
+For help or privacy questions, email [support@orsini.org](mailto:support@orsini.org). Information you voluntarily send in a support message is used to respond to your request. Please do not include private browsing data, browser profiles, or screenshots containing personal information.
+
+You can also use [GitHub Issues](https://github.com/brunorsini/tab-navigator/issues) for public reports. Security issues can be reported [privately](https://github.com/brunorsini/tab-navigator/security/advisories/new). Email providers and GitHub operate separately under their own privacy policies; contacting support is your choice.
 
 Last updated: November 18, 2026.

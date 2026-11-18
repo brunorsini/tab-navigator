@@ -1,6 +1,6 @@
 # Tab Navigator Chrome Web Store submission draft
 
-Status: submission materials prepared; not submitted to or published in the Chrome Web Store. Developer registration, publisher contact details, current store screenshots, and dashboard submission remain pending.
+Status: submission materials prepared; not submitted to or published in the Chrome Web Store. The public contact address is support@orsini.org. Developer registration, contact-email verification, current store screenshots, and dashboard submission remain pending.
 
 ## Listing
 
@@ -13,6 +13,7 @@ Status: submission materials prepared; not submitted to or published in the Chro
 - Short description (manifest): Find the right tab instantly. Search tabs and history, jump to your last tab, and cycle through recent tabs. All on your device.
 - Homepage: https://github.com/brunorsini/tab-navigator
 - Support URL: https://github.com/brunorsini/tab-navigator/issues
+- Public contact email: **support@orsini.org**
 - Privacy URL: https://github.com/brunorsini/tab-navigator/blob/main/PRIVACY.md
 - Price: free; no purchases or subscriptions.
 - Remote code: **No**. All executable code is bundled.
@@ -63,7 +64,8 @@ The extension does not sell or transfer user data to the developer or third part
 - `dist/tab-navigator-1.6.2.zip.sha256`: release checksum.
 - Capture at least one **1280 × 800** screenshot of the current extension using synthetic browsing data; up to five are allowed. Suggested views: search, selected-tab actions with Restore, and duplicate review. Existing local screenshots are excluded and must not be uploaded. See [Google's graphic asset requirements](https://developer.chrome.com/docs/webstore/cws-dashboard-listing).
 - A small 440 × 280 promotional tile and 1400 × 560 marquee are optional. No promotional video is required.
-- Verify or complete developer registration, two-step verification, and the publisher's contact information in the dashboard. Use a dedicated public support alias; do not copy private account emails into the listing.
+- Complete [developer registration](https://developer.chrome.com/docs/webstore/register), including the developer agreement and one-time fee, and enable two-step verification for the publishing account.
+- On the dashboard's **Account** page, set the public contact email to **support@orsini.org**, request verification, and follow the link Google sends to that address. The public contact address is separate from the Google account used to register. See [Google's account setup instructions](https://developer.chrome.com/docs/webstore/set-up-account). Contact-email verification has not yet been completed.
 - Review the final permission and data disclosures, upload the ZIP and clean screenshots, and submit for Google's review. No store upload or account registration has been performed.
 
 ## Manual release check

@@ -2,7 +2,7 @@
 
 ## Report a vulnerability privately
 
-Use [GitHub's private vulnerability reporting](https://github.com/brunorsini/tab-navigator/security/advisories/new). Please do not put credentials, private browsing data, or exploitable vulnerabilities in a public issue.
+Use [GitHub's private vulnerability reporting](https://github.com/brunorsini/tab-navigator/security/advisories/new), or email [support@orsini.org](mailto:support@orsini.org). Please do not put credentials, private browsing data, or exploitable vulnerabilities in a public issue.
 
 Include the affected version, a minimal reproduction using synthetic URLs/data, and the expected impact. Do not send browser profiles, storage exports, or personal screenshots.
 
