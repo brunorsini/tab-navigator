@@ -1,0 +1,95 @@
+<!doctype html>
+<html lang="en" data-theme="dark">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Tab Navigator — Duplicates & close review</title>
+    <link rel="stylesheet" href="ui.css" />
+    <link rel="stylesheet" href="review.css" />
+    <script type="module" src="review.js"></script>
+    <link rel="stylesheet" href="controls.css" />
+  </head>
+  <body class="review-page">
+    <header class="review-top">
+      <a class="review-brand" href="options.html"
+        ><img src="icons/256.png" alt="" />Tab Navigator</a
+      >
+    </header>
+    <main class="review-shell">
+      <div class="review-eyebrow" id="eyebrow">TAB CLEANUP / DUPLICATES</div>
+      <div class="hero">
+        <div>
+          <h1 id="heading">Choose what stays.</h1>
+          <p id="intro">
+            Repeated addresses, side by side. Keep the copies you want, then review the rest before
+            closing.
+          </p>
+        </div>
+        <div class="hero-glyph" aria-hidden="true"><span></span><span></span><span>✓</span></div>
+      </div>
+      <section class="review-stats" aria-label="Review summary">
+        <div><strong id="stat-one">—</strong><span id="stat-one-label">repeated pages</span></div>
+        <div><strong id="stat-two">—</strong><span id="stat-two-label">open copies</span></div>
+        <div>
+          <strong id="stat-three">—</strong><span id="stat-three-label">marked to close</span>
+        </div>
+      </section>
+      <div id="duplicates-tools" class="review-tools">
+        <label class="review-search"
+          ><span aria-hidden="true">⌕</span
+          ><input
+            id="filter"
+            type="search"
+            placeholder="Filter by title or address"
+            aria-label="Filter duplicate groups" /></label
+        ><button id="keep-all" class="subtle-button">Keep all</button
+        ><button id="use-suggestions" class="subtle-button">Use suggestions</button>
+      </div>
+      <div id="review-tools" class="review-tools" hidden>
+        <button id="back" class="subtle-button">← Choose copies</button
+        ><button id="check-permission" class="subtle-button" hidden>Allow input checks…</button
+        ><label id="unchecked-label" class="unchecked-option"
+          ><input id="include-unchecked" type="checkbox" /> Include unchecked tabs</label
+        >
+      </div>
+      <p id="explanation" class="review-explanation">
+        Same full address, including everything after ? and #. The newest copy, pinned tabs, active
+        tabs, and audio stay open by default. Matching addresses can still contain different drafts.
+      </p>
+      <div id="review-notice" class="review-notice" role="status" hidden></div>
+      <div id="working" class="working" role="status" hidden>
+        <span class="spinner" aria-hidden="true"></span>
+        <div>
+          <strong>Checking the tabs you chose…</strong>
+          <p>Only a quick input check. Sleeping tabs stay asleep. No typed text is saved.</p>
+        </div>
+      </div>
+      <div id="cards" class="duplicate-cards"></div>
+      <div id="empty-review" class="review-empty" hidden>
+        <span aria-hidden="true">✓</span>
+        <h2 id="empty-heading">No repeated addresses.</h2>
+        <p id="empty-copy">Each open page has its own address. You're all set.</p>
+      </div>
+      <button id="show-more" class="subtle-button show-more" hidden>Show more</button>
+    </main>
+    <footer class="review-dock">
+      <div
+        id="undo-bars"
+        class="undo-stack"
+        role="list"
+        aria-label="Recently closed tabs"
+        aria-live="polite"
+        hidden
+      ></div>
+      <div class="dock-inner">
+        <div class="dock-copy">
+          <strong id="plan-summary">Preparing your tabs…</strong
+          ><span id="plan-detail">Nothing closes until you review and confirm.</span>
+        </div>
+        <div class="dock-actions">
+          <button id="primary" class="primary-button" disabled>Review closures →</button>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="en" data-theme="dark">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Tab Navigator — Save to Chrome bookmarks</title>
+    <link rel="stylesheet" href="ui.css" />
+    <link rel="stylesheet" href="review.css" />
+    <script type="module" src="bookmarks.js"></script>
+    <link rel="stylesheet" href="controls.css" />
+  </head>
+  <body class="bookmark-page">
+    <main class="bookmark-shell">
+      <header class="bookmark-header">
+        <a class="review-brand" href="options.html"
+          ><img src="icons/256.png" alt="" />Tab Navigator</a
+        ><button
+          id="close-bookmarks"
+          class="icon-button close-button"
+          aria-label="Cancel bookmarking"
+          title="Cancel"
+        >
+          ×
+        </button>
+      </header>
+      <h1 id="bookmark-heading">Save to Chrome bookmarks</h1>
+      <p id="bookmark-intro">Choose a Chrome bookmark folder for these pages.</p>
+      <p class="bookmark-counts">
+        <strong id="selected-count">—</strong> tabs selected <span aria-hidden="true">→</span>
+        <strong id="unique-count">—</strong> unique bookmarks
+      </p>
+      <div id="bookmark-notice" class="review-notice" role="status" hidden></div>
+      <section id="permission-card" class="bookmark-form duplicate-card" hidden>
+        <h2>Allow bookmark access</h2>
+        <p>Chrome needs your permission to show your folders and add bookmarks.</p>
+        <button id="allow-bookmarks" class="primary-button">Allow bookmark access…</button>
+      </section>
+      <section id="folder-card" class="bookmark-form duplicate-card" hidden>
+        <label>Chrome bookmark folder<select id="bookmark-destination"></select></label>
+        <label
+          >New subfolder (optional)<input
+            id="bookmark-name"
+            maxlength="100"
+            placeholder="For example, Research"
+        /></label>
+        <p>Repeated addresses are saved once. Bookmarks already in this folder are skipped.</p>
+      </section>
+      <div class="bookmark-actions">
+        <button id="discard-draft" class="subtle-button">Cancel</button
+        ><button id="save-bookmarks" class="primary-button" disabled>Save bookmarks</button>
+      </div>
+      <p id="bookmark-summary" class="bookmark-footnote">Your tabs will stay open.</p>
+      <details id="bookmark-preview" class="bookmark-selection">
+        <summary id="bookmark-selection-title">Selected pages</summary>
+        <div id="bookmark-list" class="bookmark-list"></div>
+        <button id="bookmark-more" class="subtle-button" hidden>Show more</button>
+      </details>
+    </main>
+  </body>
+</html>

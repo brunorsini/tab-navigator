@@ -1,0 +1,10 @@
+import { mkdir, readFile, writeFile, copyFile } from 'node:fs/promises';
+import { resolve, join } from 'node:path';
+const root = resolve(import.meta.dirname, '..');
+const dependency = join(root, 'node_modules/tldts');
+const target = join(root, 'extension/vendor');
+await mkdir(target, { recursive: true });
+const bundle = await readFile(join(dependency, 'dist/index.esm.min.js'), 'utf8');
+await writeFile(join(target, 'tldts.js'), bundle.replace(/\n\/\/# sourceMappingURL=.*\n?$/, '\n'));
+await copyFile(join(dependency, 'LICENSE'), join(target, 'tldts-LICENSE'));
+console.log('Updated the bundled tldts domain parser and license.');

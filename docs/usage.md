@@ -1,0 +1,72 @@
+# Using Tab Navigator
+
+## Shortcuts
+
+| Action                                      | macOS               | Windows / Linux  |
+| ------------------------------------------- | ------------------- | ---------------- |
+| Open search                                 | Control + E         | Ctrl + Shift + K |
+| Jump to the last tab; press again to return | Control + Shift + 9 | Alt + Q          |
+| Cycle through recent tabs, older            | Control + Shift + 7 | Alt + A          |
+| Reverse the cycle                           | Control + Shift + 8 | Alt + Shift + A  |
+
+Type to search, use Up/Down to select, and press Enter to switch. Command/Ctrl + 1–9 opens the corresponding result. Escape or the top-right × closes the palette immediately. The × inside the search field clears the query. Tab navigates the filters and settings button. Inside the palette, Option/Alt + Left/Right also cycles through recent tabs.
+
+Cycling opens the same palette in a visual recent-tab mode. It freezes the MRU order and moves only the highlight, keeping the current page active until you press Enter. Escape or clicking outside cancels. The last-tab shortcut remains an immediate two-tab toggle. Chrome 127 or later is required for the browser-wide popup API.
+
+**Keyboard Maestro setup:** map Command + Option + Tab to Control + Shift + 7, and Command + Option + Shift + Tab to Control + Shift + 8. Hold the modifiers while tapping Tab to move through the list; Shift reverses. **Enter confirms, Escape cancels.** Releasing the modifiers leaves the list open. No extra confirmation shortcut or release macro is needed.
+
+Chrome does not directly accept Tab in extension bindings; Keyboard Maestro can translate alternative gestures into supported keys.
+
+Last-used times are color coded consistently in search, recent-tab switching, and duplicate review: green under one hour, amber from one hour to 24 hours, and soft red from 24 hours onward. The text remains visible; hover for the full date and time. Unknown times stay neutral. This is time since last use, not tab creation. Colors update when rows render, without background polling or changing their order.
+
+Last use takes the newer of Chrome's per-tab `lastAccessed` and the extension's recorded activation, window focus, or active-tab navigation. An old cached timestamp cannot mask a newer Chrome visit. Returning to duplicate review refreshes ages and identifies the most recent copy in each exact-URL group without moving rows or resetting Keep/Close choices. Fragment changes stay attached to their individual tab IDs; using one tab does not mark every copy as recently used.
+
+The toolbar uses the simple golden spyglass at small icon sizes. The popup and full pages retain the detailed sailor mascot.
+
+## Selecting and organizing results
+
+The footer reports the exact matching **open-tab** count. Every match is available by scrolling; only visible rows and a small buffer are mounted. **Select all N tabs** includes matches outside the viewport. Use ↑/↓ to highlight a result and **Command + Enter** (Ctrl + Enter on Windows/Linux) to check or uncheck it without leaving search. Repeat on other results to select a batch. Holding the shortcut toggles only once. Plain Enter switches to the highlighted tab; Space still types into the query. Individual checkboxes or Command/Ctrl-click also toggle a tab. Changing the query clears selection, and changing scope removes selections outside the results. History records are not selected for tab actions.
+
+- **Close N tabs** immediately closes the explicitly selected tabs without a review page or website-permission request. Hovering a search-result tab reveals an × with the same behavior; clicking its title, icon, or other non-checkbox area switches to it. Each close action gets an independent **Restore N tabs** bar for 60 seconds, with a shrinking gradient timer. New actions stack above earlier ones; any batch can be restored directly. The countdown survives closing/reopening the popup and worker suspension. A local recovery journal is saved before removal; storage failure prevents closure. Failed restores retain only the remaining tabs and get another minute to retry. Reopening restores URLs, positions, pins and groups where possible, not unsaved forms, navigation stacks, or page state. Empty windows keep a new tab so Restore remains reachable. Expired journal entries are discarded on the next close or restore.
+- **Add to group** chooses an existing group or makes a named group in each affected window. Existing groups collect selected tabs into that group's window. Pinned tabs must be deselected or unpinned first.
+- **Add to bookmark folder** first saves the selected titles and addresses locally, then opens a dedicated page. Optional bookmark permission is requested there, so its dialog cannot dismiss the task. Choices survive page reloads; **Continue** in search reopens the latest unfinished selection. Choose an existing folder or create a named subfolder. Cancel or the × beside an unfinished bookmark action discards that selection without closing any tabs. Completed saves discard their temporary URL backup. Duplicate URLs are skipped; failed entries remain selected for retry. Chrome may sync bookmarks according to its own settings.
+- **Open in split view** pairs exactly two selected tabs using Chrome's native split view (Chrome 155+). Both must be in the same window and group, with matching pinned/unpinned state, and neither can already belong to a split. The action explains incompatible selections. Eligible tabs are placed next to each other before pairing; if pairing fails, their earlier position is restored when still possible. It never duplicates tabs, silently changes their groups, or substitutes separate windows. Availability is checked at runtime.
+
+After a close from search, the highlight follows Chrome's active tab and scrolls it into view without reordering the list. If the current tab is outside the query or filters, a message explains that it is not in these search results. Restore activates and highlights the reopened tab; for a batch it prefers the tab that was current when closed, otherwise the first successfully restored tab. If Chrome dismisses the popup during the switch, the next opening can consume the same highlight target for up to one minute. Once applied, background refreshes do not pull the highlight away from subsequent keyboard navigation.
+
+## Duplicates and close checks
+
+**Find duplicates** opens a visual workspace with one card per repeated full HTTP/HTTPS address. Query strings, fragments, and schemes remain distinct. Each copy shows its last use, window, group, and Keep/Close choice. Suggestions retain the newest copy plus pinned, active, and audible tabs. At least one copy must stay. Filtering limits the proposed close to matching groups; nothing closes until the final review is confirmed.
+
+Before duplicate cleanup closes tabs, a bounded, on-demand check looks for changed standard form controls, populated editable documents, and files selected for upload. Possible unsaved input and anything that cannot be checked are **kept by default**. Each can be included explicitly; unchecked pages also have a separate opt-in batch control. Optional website access can be requested for just the websites being reviewed. Sleeping, frozen, loading, inaccessible, or overly complex pages are not woken or assumed safe. Explicit Close actions in search bypass this review and close immediately with the same one-minute Restore bars.
+
+Checks run in at most three tabs at once, with a 16 ms / 12,000-element budget per frame, a 1.8-second per-tab timeout, and an eight-second review budget. Only status flags and reasons leave a page, never typed values or document text. A final recheck precedes each removal; changed addresses, newly detected edits, and missing keeper copies prevent the close. Reviews expire after ten minutes. A 30-second batch budget stops starting further closes; native Chrome dialogs may still require attention.
+
+This is best-effort protection, not a universal saved-state detector: custom editors, canvas applications, inaccessible frames, and autofilled controls can be ambiguous. **No edits detected** is deliberately not called “safe.” Undo restores addresses and tab organization, not unsaved work.
+
+## Search behavior
+
+- Every opening starts with **Tabs on, History off**. Check History to search both sources with the same query; uncheck Tabs to search only history. Sources apply only to the current opening.
+- With an empty query, the previous tab appears first, followed by other tabs in most-recently-used order. The active tab appears after other open tabs. Website favicons, titles, URLs, group labels, and short matching excerpts make tabs recognizable without thumbnails.
+- Tab and history results load their favicons through Chrome's local favicon cache. Icons are loaded lazily as results become visible. No external favicon service or direct request to the website is used; missing icons use Chrome's generic icon or a local text fallback.
+- Matching uses page titles, decoded URLs, tab-group names, and optionally page context. Exact whole-title/address matches rank first. Whole-word title and hostname matches (including all query words split across those fields) come next, ordered by most recently used. Partial matches, URL-path mentions, group names, and page context follow; one-edit typo matches come last. Recency decides order within each quality tier, before small field/position bonuses. Matching ignores case and accents. Quotes require an exact phrase.
+- History is read only when enabled and the query is nonempty. The complete phrase and up to three individual words are queried against Chrome's title/URL history, with up to 400 candidates per query and up to 1,600 deduplicated candidates. All candidates are ranked against the same complete query. Chrome does not retain the body text of historical pages; historical page contents are not searched, and typo matching depends on the candidates Chrome returns.
+- If a history result is already open, Enter activates that tab instead of opening a duplicate. Multiple open tabs with the same URL remain independently selectable.
+- **Group by domain** is on by default and remembered locally. During a search it combines a site and its subdomains (for example, `example.com`, `docs.example.com`, and `app.example.com`). Exact matches stay in their own section at the top. A domain matching the query precedes other website groups, so GitHub mentions come after the matching website’s own pages. Each group preserves the same relevance-then-recency ranking. Empty searches and the recent-tab switcher remain in global MRU order. Country suffixes such as `com.br` and private hosting domains such as `github.io` are handled by the bundled Public Suffix List.
+- Result order stays stable automatically throughout each search. Background updates and delayed history do not move existing matches; new matches append and removed/nonmatching tabs disappear. The highlighted tab and checked tabs are retained when possible. Reopening search or changing the query, sources, window scope, or domain toggle starts a fresh ranking. There is no manual order-lock control.
+- **This window** applies to open-tab results and switching. History remains browser-wide.
+- **Search page text** is opt-in in settings. It requests HTTP/HTTPS website access and scans loaded page text in short idle slices on load, revisit, and title/navigation events. This includes text deep in an article. It does not continuously observe every body mutation, download closed/discarded tabs, parse PDFs or local files, perform OCR, understand video/audio, or retrieve YouTube transcripts. Text in frames and closed shadow roots is not indexed.
+- Captures are bounded to 200,000 text characters, 12,000 text nodes, or 200 ms of processing, split into approximately 4 ms slices. Descriptions and headings have separate small caps. The session cache retains at most 350 pages and two million total text/heading/description characters, evicting older captures. These deliberate limits keep the feature practical on older machines; it is not an unlimited full-document search engine.
+- Page text skips form fields, editable areas, explicitly hidden elements, and elements marked `data-relay-private`. Other text may contain personal information. Closing a tab removes its excerpt; disabling the feature clears all excerpts and removes website access.
+
+## Reliability and resource use
+
+Manifest V3 with a service worker that is allowed to sleep. No keepalive interval, AI model, remote font, analytics, remote favicon request, or server. The bundled MIT-licensed tldts parser (about 132 KB) groups domains using its local Public Suffix List; it never downloads code or lists at runtime. Recency and cycling state live in `chrome.storage.session` and survive worker suspension. Browser restarts rebuild recency from Chrome's tab timestamps. Preferences live in `chrome.storage.local`.
+
+Activation and state mutations are serialized to avoid races. Tab closure and replacement are handled, stale content is invalidated on navigation, and delayed history searches cannot overwrite a newer query. Private browsing is disabled by manifest.
+
+Cycling checks whether its popup actually exists before reusing a saved preview. If the popup crashed or disappeared without sending its close signal, the next cycle shortcut opens a fresh session immediately. A visible switcher keeps the same order and selection across repeated forward/backward commands.
+
+The popup validates its markup before loading the interactive code. An older cached document is refreshed once; a persistent mismatch shows Retry and Close instead of failing on a missing button. The popup build, manifest, and required controls are checked by the test suite. After an unpacked update, reload the extension once in `chrome://extensions` to activate the new background worker. Clear previously recorded errors before testing, so new failures can be distinguished from old reports. Updating source files alone does not reload the worker.
+
+Designed for modest machines, including machines with 8 GB of RAM; total Chrome memory depends on the open sites. No end-to-end measurement on an 8 GB machine has been performed. The ranking benchmark in `npm test` reports local timing for 2,500 entries.

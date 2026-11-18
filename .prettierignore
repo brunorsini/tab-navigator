@@ -1,0 +1,7 @@
+extension/vendor/
+package-lock.json
+test-results/
+dist/
+generated_images/
+design/
+AGENTS.md

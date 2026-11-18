@@ -1,0 +1,9 @@
+[extend]
+useDefault = true
+
+[[allowlists]]
+description = "Chrome shortcut assertions are key combinations, not API credentials."
+condition = "AND"
+paths = ['''(^|/)tests/browser\.mjs$''']
+regexTarget = "secret"
+regexes = ['''^MacCtrl\+Shift\+[789]$''']

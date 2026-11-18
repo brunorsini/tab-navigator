@@ -1,0 +1,179 @@
+<!doctype html>
+<html lang="en" data-theme="dark" data-palette-build="1.6.2">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Tab Navigator — Find your tab</title>
+    <link rel="stylesheet" href="ui.css" />
+    <script type="module" src="popup.js?ui=1.6.2"></script>
+    <link rel="stylesheet" href="controls.css" />
+  </head>
+  <body class="popup">
+    <main class="palette" aria-label="Tab Navigator">
+      <header class="topbar">
+        <div class="wordmark">Tab Navigator</div>
+        <div class="topbar-right">
+          <button class="icon-button" id="settings" aria-label="Open settings" title="Settings">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+              <path d="M4 7h16M4 17h16" />
+              <circle cx="9" cy="7" r="3" />
+              <circle cx="15" cy="17" r="3" />
+            </svg></button
+          ><button
+            id="close-palette"
+            class="icon-button close-button"
+            aria-label="Close Tab Navigator"
+            title="Close · Esc"
+          >
+            ×
+          </button>
+        </div>
+      </header>
+      <div id="switcher-heading" class="switcher-heading" hidden>
+        <button id="cancel-preview" class="icon-button" aria-label="Cancel tab switching">×</button>
+        <h1>Where you left off.</h1>
+        <p id="switcher-instructions">⌘ ⌥ Tab moves down · Add Shift to move up</p>
+        <span id="switcher-finish">Enter switches to the highlighted tab · Esc cancels</span>
+      </div>
+      <div class="search-wrap">
+        <img
+          class="search-mascot"
+          src="icons/256.png"
+          width="64"
+          height="64"
+          alt=""
+          draggable="false"
+        />
+        <input
+          id="search"
+          type="search"
+          autocomplete="off"
+          spellcheck="false"
+          autofocus
+          placeholder="Aye! Where to?"
+          aria-label="Search tabs and history"
+          role="combobox"
+          aria-autocomplete="list"
+          aria-controls="results"
+          aria-expanded="true"
+        />
+        <button id="clear" class="key-button" aria-label="Clear search" title="Clear search" hidden>
+          ×
+        </button>
+        <kbd id="search-shortcut" class="search-shortcut">⌃ E</kbd>
+      </div>
+      <div class="filters">
+        <div class="sources" aria-label="Search sources">
+          <button id="tabs-filter" class="filter" aria-pressed="true">
+            <span class="check" aria-hidden="true">✓</span>Tabs<span id="tab-count" class="count"
+              >0</span
+            >
+          </button>
+          <button id="history-filter" class="filter" aria-pressed="false">
+            <span class="check" aria-hidden="true">✓</span>History
+          </button>
+        </div>
+        <div class="view-filters">
+          <button
+            id="domain-filter"
+            class="filter"
+            aria-pressed="true"
+            title="Group search results by website, including subdomains. An empty search stays in recent-tab order."
+          >
+            <span class="check" aria-hidden="true">✓</span>Group by domain</button
+          ><button
+            id="window-filter"
+            class="scope-button"
+            aria-pressed="false"
+            title="Limit tabs and switching to this window"
+            hidden
+          >
+            All windows <span aria-hidden="true">⌄</span>
+          </button>
+        </div>
+      </div>
+      <div id="selection-bar" class="selection-bar">
+        <button id="select-all" class="text-button">Select all matching tabs</button
+        ><button
+          id="duplicates"
+          class="text-button duplicates-link"
+          title="Review repeated addresses and choose which copies to keep"
+        >
+          Find duplicates ↗</button
+        ><span id="selection-count" role="status" aria-live="polite"></span
+        ><button id="clear-selection" class="text-button" hidden>Clear</button>
+      </div>
+      <div id="bulk-bar" class="bulk-bar" hidden>
+        <button id="close-tabs">Close selected</button><button id="group-tabs">Add to group…</button
+        ><button id="bookmark-tabs">Add to bookmark folder…</button
+        ><button id="split-tabs" aria-describedby="split-hint">Open in split view</button>
+      </div>
+      <p id="split-hint" class="bulk-hint" hidden></p>
+      <div class="results-heading">
+        <span id="result-label">RECENT TABS</span>
+        <div class="order-controls">
+          <span id="order-hint" class="order-hint">Most recent first</span>
+        </div>
+      </div>
+      <div id="results" class="results" role="listbox" aria-label="Matching tabs and history"></div>
+      <div id="empty" class="empty" hidden>
+        <span class="empty-symbol" aria-hidden="true">⌕</span>
+        <h1 id="empty-title">A little space to think.</h1>
+        <p id="empty-message">Your tabs will appear here.</p>
+      </div>
+      <p id="current-tab-notice" class="notice" role="status" hidden></p>
+      <p id="notice" class="notice" role="status" hidden></p>
+      <div id="bookmark-resume-bar" class="undo-bar" hidden>
+        <span id="bookmark-resume-label"></span>
+        <div class="bookmark-resume-actions">
+          <button id="bookmark-resume" class="text-button">Continue ↗</button
+          ><button
+            id="bookmark-dismiss"
+            class="icon-button close-button"
+            aria-label="Cancel bookmarking"
+            title="Cancel bookmarking; your tabs stay open"
+          >
+            ×
+          </button>
+        </div>
+      </div>
+      <div
+        id="undo-bars"
+        class="undo-stack"
+        role="list"
+        aria-label="Recently closed tabs"
+        aria-live="polite"
+        hidden
+      ></div>
+      <footer class="footer">
+        <div class="key-hints">
+          <span><kbd>↑</kbd><kbd>↓</kbd> navigate</span
+          ><span title="Check or uncheck the highlighted tab"
+            ><kbd id="selection-shortcut">⌘ ↵</kbd> select</span
+          ><span><kbd>↵</kbd> <span id="enter-label">switch to tab</span></span
+          ><span><kbd>esc</kbd> close</span>
+        </div>
+        <span id="result-total" class="result-total" aria-live="polite"></span>
+      </footer>
+    </main>
+    <section
+      id="action-panel"
+      class="action-panel"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="action-title"
+      hidden
+    >
+      <h2 id="action-title"></h2>
+      <p id="action-description"></p>
+      <label id="destination-label">Destination<select id="destination"></select></label>
+      <label id="new-name-label"
+        >Name<input id="new-name" type="text" maxlength="100" autocomplete="off"
+      /></label>
+      <p id="action-error" class="notice" role="status"></p>
+      <div class="action-buttons">
+        <button id="action-cancel">Cancel</button><button id="action-confirm">Confirm</button>
+      </div>
+    </section>
+  </body>
+</html>

@@ -1,0 +1,107 @@
+<!doctype html>
+<html lang="en" data-theme="dark">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Tab Navigator — Settings</title>
+    <link rel="stylesheet" href="ui.css" />
+    <script type="module" src="options.js"></script>
+    <link rel="stylesheet" href="controls.css" />
+  </head>
+  <body class="settings-page">
+    <main class="settings-shell">
+      <header class="settings-top">
+        <div class="wordmark">
+          <img class="brand-icon" src="icons/256.png" alt="" />Tab Navigator
+        </div>
+        <span class="version">VERSION 1.6.2 · OPEN SOURCE</span>
+      </header>
+      <span class="eyebrow">LESS SEARCHING. MORE FLOW.</span>
+      <h1 class="settings-title">A quicker way back.</h1>
+      <p class="intro">
+        Find an open tab. Add history when you need it. Pick up where you left off.
+      </p>
+      <section class="settings-card" aria-labelledby="keyboard-heading">
+        <div class="card-heading">
+          <h2 id="keyboard-heading">Keyboard shortcuts</h2>
+          <button id="edit-shortcuts" class="text-button">Customize in Chrome ↗</button>
+        </div>
+        <div id="shortcuts"></div>
+        <p class="card-note">
+          The cycle shortcut opens a visual recent-tab list. Repeat it to move the highlight;
+          reverse moves back. Your current page stays active until you press Enter. Escape or
+          clicking outside cancels. The list stays open when you release the modifiers. The last-tab
+          shortcut still toggles immediately between two tabs.<br /><br />Keyboard Maestro: Command
+          + Option + Tab sends Control + Shift + 7; adding Shift sends Control + Shift + 8. Your
+          existing mappings work as they are. No release macro or extra confirmation shortcut is
+          needed.
+        </p>
+      </section>
+      <section class="settings-card" aria-labelledby="search-heading">
+        <div class="card-heading"><h2 id="search-heading">Make it yours</h2></div>
+        <label class="settings-row"
+          ><div>
+            <span class="setting-name">Search page text</span>
+            <p class="setting-description">
+              Search descriptions, headings, and loaded text from open websites. Chrome will ask for
+              website access. Pages are indexed in short idle slices, with a 200,000-character limit
+              per page and a small session cache. PDF files, image text, and video transcripts are
+              not indexed.
+            </p>
+          </div>
+          <input id="page-text" class="toggle" type="checkbox"
+        /></label>
+        <label class="settings-row"
+          ><div>
+            <span class="setting-name">Stay in this window</span>
+            <p class="setting-description">
+              Limit tab results and switching to the current window. History is shared across
+              windows.
+            </p>
+          </div>
+          <input id="current-window" class="toggle" type="checkbox"
+        /></label>
+        <label class="settings-row"
+          ><div>
+            <span class="setting-name">Appearance</span>
+            <p class="setting-description">A quiet space for finding your next tab.</p>
+          </div>
+          <select id="theme" class="settings-select">
+            <option value="dark">Dark</option>
+            <option value="light">Light</option>
+            <option value="system">System</option>
+          </select></label
+        >
+        <div class="settings-row">
+          <div>
+            <span class="setting-name">Page-text cache</span>
+            <p class="setting-description">
+              Clear saved excerpts. With page-text search on, pages can be indexed again when you
+              revisit them.
+            </p>
+          </div>
+          <button id="clear-context" class="text-button">Clear excerpts</button>
+        </div>
+      </section>
+      <div class="privacy-note">
+        <svg
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="1.5"
+          aria-hidden="true"
+        >
+          <path d="m12 3 8 3v6c0 5-8 9-8 9s-8-4-8-9V6z" />
+          <path d="m8 12 3 3 5-6" />
+        </svg>
+        <div>
+          <strong>Fast by design. Private by default.</strong><br />No accounts, analytics, AI
+          downloads, or remote search requests. Everything is searched on your device. Incognito is
+          excluded. Page-text search skips form fields and editable areas; other page text may
+          contain personal information.
+        </div>
+      </div>
+      <p id="status" class="settings-status" role="status" aria-live="polite"></p>
+    </main>
+  </body>
+</html>
